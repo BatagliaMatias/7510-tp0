@@ -1,6 +1,9 @@
 package ar.fiuba.tdd.template.tp0;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,12 +30,12 @@ public class RegExGeneratorTest {
     }
 
     //TODO: Uncomment these tests
-    /*
+
     @Test
     public void testAnyCharacter() {
         assertTrue(validate(".", 1));
     }
-
+/*
     @Test
     public void testMultipleCharacters() {
         assertTrue(validate("...", 1));
