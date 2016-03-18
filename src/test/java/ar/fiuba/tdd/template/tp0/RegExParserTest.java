@@ -30,6 +30,14 @@ public class RegExParserTest {
     }
 
     @Test
+    public void testRegEscapedAsterisk(){
+        tokens = regExParser.parsear("\\*");
+        Token token = tokens.get(0);
+        Assert.assertEquals("",token.getQuantifier());
+        Assert.assertEquals("\\*",token.getGenerator());
+    }
+
+    @Test
     public void testRegExLiteral(){
         tokens = regExParser.parsear("a");
         Token token = tokens.get(0);

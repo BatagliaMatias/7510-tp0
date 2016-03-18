@@ -14,7 +14,7 @@ public class RegExParser {
         Token token = new Token("","");
         String generator = "";
         for (String character : characters) {
-            if(tokenValidator.isQuantifier(character)){
+            if(tokenValidator.isQuantifier(character) && !tokenValidator.isLastCharacterEscape(generator)){
                 token.setQuantifier(character);
                 token.setGenerator(generator);
                 tokens.add(token);

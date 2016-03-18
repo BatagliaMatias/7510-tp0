@@ -32,4 +32,8 @@ public class TokenValidator {
         return (!generator.equals(""));
     }
 
+    public Boolean isLastCharacterEscape(String generator){
+        return generator.endsWith("\\");
+    }
+
 }
