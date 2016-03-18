@@ -32,4 +32,10 @@ public class TokenValidatorTest {
     public void isLastGenerator() throws Exception {
         Assert.assertThat(tokenValidator.isLastGenerator("a"), is(true));
     }
+
+
+    @Test
+    public void testIsLastCharacterEscape() throws Exception {
+        Assert.assertThat(tokenValidator.isLastCharacterEscape("\\"), is(true));
+    }
 }
