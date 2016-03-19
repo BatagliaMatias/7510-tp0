@@ -9,67 +9,23 @@ public class Interpreter {
     int maxLength;
     TokenValidator tokenValidator = new TokenValidator();
     RandomNumber randomNumber = new RandomNumber(0, 1);
+    int max;
+    int min;
+    int limit;
+    ArrayList<String> options;
+    StringBuffer result;
 
     public Interpreter(int maxLength) {
         this.maxLength = maxLength;
     }
 
     public String interpret(Token token) {
-        int max;
-        int min;
-        StringBuffer result = new StringBuffer();
-        ArrayList<String> options;
-        switch (token.getQuantifier()) {
-            case "*":
-                min = 0;
-                max = maxLength;
-                break;
-            case "?":
-                min = 0;
-                max = 1;
-
-                break;
-            case "+":
-                min = 1;
-                max = maxLength;
-
-                break;
-            default:
-                min = 1;
-                max = 1;
-
-        }
+        result = new StringBuffer();
+        calculateQuantity(token);
         randomNumber = new RandomNumber(min, max);
-        int limit = randomNumber.getNumber();
+        limit = randomNumber.getNumber();
 
-        if (tokenValidator.isDot(token.getGenerator())) {
-
-
-            for (int i = min; i <= limit; i++) {
-                result.append(generateRandomChar());
-            }
-
-        } else {
-            if (tokenValidator.isUnion(token.getGenerator())) {
-                options = unionOptions(token.getGenerator());
-                randomNumber.setMin(0);
-                randomNumber.setMax(options.size() - 1);
-                for (int i = min; i <= limit; i++) {
-                    result.append(options.get(randomNumber.getNumber()));
-                }
-            } else {
-                if (token.getQuantifier().equals("")) {
-                    result.append(deleteEscaped(token.getGenerator()));
-                } else {
-                    for (int i = min; i < limit; i++) {
-                        result.append(deleteEscaped(token.getGenerator()));
-                    }
-
-                }
-
-            }
-        }
-
+        generateResult(token);
         return result.toString();
     }
 
@@ -109,16 +65,58 @@ public class Interpreter {
         randomNumber.setMax(127);
         int number = randomNumber.getNumber();
         String escape = "";
-
-        /** if(number < 14 ||number > 133 ){
-         escape = "\\";
-         }
-         if(number == 47){
-         escape = "\\";
-         }*/
-
-        //return String.valueOf(((char) randomNumber.getNumber()));
-        //return escape.concat(String.valueOf(Character.toChars(randomNumber.getNumber())));
         return escape.concat(String.valueOf(Character.toChars(number)));
+    }
+
+    private void calculateQuantity(Token token) {
+        switch (token.getQuantifier()) {
+            case "*":
+                min = 0;
+                max = maxLength;
+                break;
+            case "?":
+                min = 0;
+                max = 1;
+
+                break;
+            case "+":
+                min = 1;
+                max = maxLength;
+
+                break;
+            default:
+                min = 1;
+                max = 1;
+        }
+
+    }
+
+    private void generateResult(Token token) {
+        if (tokenValidator.isDot(token.getGenerator())) {
+            for (int i = min; i <= limit; i++) {
+                result.append(generateRandomChar());
+            }
+
+        } else {
+            if (tokenValidator.isUnion(token.getGenerator())) {
+                options = unionOptions(token.getGenerator());
+                randomNumber.setMin(0);
+                randomNumber.setMax(options.size() - 1);
+                for (int i = min; i <= limit; i++) {
+                    result.append(options.get(randomNumber.getNumber()));
+                }
+            } else {
+                if (token.getQuantifier().equals("")) {
+                    result.append(deleteEscaped(token.getGenerator()));
+                } else {
+                    for (int i = min; i < limit; i++) {
+                        result.append(deleteEscaped(token.getGenerator()));
+                    }
+
+                }
+
+            }
+        }
+
     }
 }

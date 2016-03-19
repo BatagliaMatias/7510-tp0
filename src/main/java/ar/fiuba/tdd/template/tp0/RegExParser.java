@@ -7,41 +7,48 @@ import java.util.ArrayList;
  */
 public class RegExParser {
     private TokenValidator tokenValidator = new TokenValidator();
+    private Token token = new Token("", "");
+    private ArrayList<Token> tokens = new ArrayList<Token>();
+    private String generator = "";
 
     public ArrayList<Token> parsear(String regEx) {
-        ArrayList<Token> tokens = new ArrayList<Token>();
         String[] characters = regEx.split("");
-        Token token = new Token("", "");
-        String generator = "";
         for (String character : characters) {
-            if (tokenValidator.isQuantifier(character) && !tokenValidator.isLastCharacterEscape(generator)) {
-                token.setQuantifier(character);
-                token.setGenerator(generator);
-                tokens.add(token);
-                generator = "";
-                token = new Token("", "");
-            } else {
-                if (tokenValidator.isOpenUnionGenerator(generator) || tokenValidator.isLastCharacterEscape(generator)) {
-                    generator += character;
-                } else {
-                    if (generator != "") {
-                        token.setGenerator(generator);
-                        tokens.add(token);
-                        token = new Token("", "");
-                        generator = "";
-                    }
-                    generator = character;
-                }
-            }
-
+            processCharacter(character);
         }
 
+        lastCharacter(generator);
+
+        return tokens;
+    }
+
+    private void lastCharacter(String generator) {
         if (tokenValidator.isLastGenerator(generator)) {
             token.setGenerator(generator);
             tokens.add(token);
         }
-        return tokens;
     }
 
+    private void processCharacter(String character) {
+        if (tokenValidator.isQuantifier(character) && !tokenValidator.isLastCharacterEscape(generator)) {
+            token.setQuantifier(character);
+            token.setGenerator(generator);
+            tokens.add(token);
+            generator = "";
+            token = new Token("", "");
+        } else {
+            if (tokenValidator.isOpenUnionGenerator(generator) || tokenValidator.isLastCharacterEscape(generator)) {
+                generator += character;
+            } else {
+                if (!generator.equals("") ) {
+                    token.setGenerator(generator);
+                    tokens.add(token);
+                    token = new Token("", "");
+                    generator = "";
+                }
+                generator = character;
+            }
+        }
+    }
 
 }
