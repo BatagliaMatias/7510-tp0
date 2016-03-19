@@ -11,25 +11,23 @@ public class RegExParser {
     public ArrayList<Token> parsear(String regEx) {
         ArrayList<Token> tokens = new ArrayList<Token>();
         String[] characters = regEx.split("");
-        Token token = new Token("","");
+        Token token = new Token("", "");
         String generator = "";
         for (String character : characters) {
-            if(tokenValidator.isQuantifier(character) && !tokenValidator.isLastCharacterEscape(generator)){
+            if (tokenValidator.isQuantifier(character) && !tokenValidator.isLastCharacterEscape(generator)) {
                 token.setQuantifier(character);
                 token.setGenerator(generator);
                 tokens.add(token);
                 generator = "";
-                token = new Token("","");
-            }
-            else{
-                if(tokenValidator.isOpenUnionGenerator(generator) || tokenValidator.isLastCharacterEscape(generator)){
+                token = new Token("", "");
+            } else {
+                if (tokenValidator.isOpenUnionGenerator(generator) || tokenValidator.isLastCharacterEscape(generator)) {
                     generator += character;
-                }
-                else{
-                    if(generator != ""){
+                } else {
+                    if (generator != "") {
                         token.setGenerator(generator);
                         tokens.add(token);
-                        token = new Token("","");
+                        token = new Token("", "");
                         generator = "";
                     }
                     generator = character;
@@ -38,7 +36,7 @@ public class RegExParser {
 
         }
 
-        if(tokenValidator.isLastGenerator(generator)){
+        if (tokenValidator.isLastGenerator(generator)) {
             token.setGenerator(generator);
             tokens.add(token);
         }

@@ -8,21 +8,21 @@ import java.util.ArrayList;
 public class Interpreter {
     int maxLength;
     TokenValidator tokenValidator = new TokenValidator();
-    RandomNumber randomNumber = new RandomNumber(0,1);
-    public Interpreter(int maxLength){
+    RandomNumber randomNumber = new RandomNumber(0, 1);
+
+    public Interpreter(int maxLength) {
         this.maxLength = maxLength;
     }
 
-    public String interpret(Token token){
+    public String interpret(Token token) {
         int max;
         int min;
-        String result = "";
-        ArrayList<String> options = new ArrayList<String>();
-        switch (token.getQuantifier()){
+        StringBuffer result = new StringBuffer();
+        ArrayList<String> options;
+        switch (token.getQuantifier()) {
             case "*":
                 min = 0;
                 max = maxLength;
-
                 break;
             case "?":
                 min = 0;
@@ -39,33 +39,30 @@ public class Interpreter {
                 max = 1;
 
         }
-        randomNumber = new RandomNumber(min,max);
+        randomNumber = new RandomNumber(min, max);
         int limit = randomNumber.getNumber();
 
-        if(tokenValidator.isDot(token.getGenerator())){
+        if (tokenValidator.isDot(token.getGenerator())) {
 
 
             for (int i = min; i <= limit; i++) {
-                result += generateRandomChar();
+                result.append(generateRandomChar());
             }
 
-        }
-        else{
-            if(tokenValidator.isUnion(token.getGenerator())){
+        } else {
+            if (tokenValidator.isUnion(token.getGenerator())) {
                 options = unionOptions(token.getGenerator());
                 randomNumber.setMin(0);
-                randomNumber.setMax(options.size()-1);
+                randomNumber.setMax(options.size() - 1);
                 for (int i = min; i <= limit; i++) {
-                    result += options.get(randomNumber.getNumber());
+                    result.append(options.get(randomNumber.getNumber()));
                 }
-            }
-            else{
-                if(token.getQuantifier()==""){
-                    result += deleteEscaped(token.getGenerator());
-                }
-                else{
+            } else {
+                if (token.getQuantifier().equals("")) {
+                    result.append(deleteEscaped(token.getGenerator()));
+                } else {
                     for (int i = min; i < limit; i++) {
-                        result += deleteEscaped(token.getGenerator());
+                        result.append(deleteEscaped(token.getGenerator()));
                     }
 
                 }
@@ -73,22 +70,19 @@ public class Interpreter {
             }
         }
 
-
-
-        return result;
+        return result.toString();
     }
 
     private ArrayList<String> unionOptions(String generator) {
         ArrayList<String> options = new ArrayList<String>();
         String[] characters = generator.split("");
         String aux = "";
-        for (String character:characters) {
+        for (String character : characters) {
 
-            if(!character.equals("[") && !character.equals("]")){
-                if(character.equals("\\")){
-                   //aux = character;
-                }
-                else{
+            if (!character.equals("[") && !character.equals("]")) {
+                if (character.equals("\\")) {
+                    //aux = character;
+                } else {
                     aux += character;
                     options.add(aux);
                     aux = "";
@@ -98,29 +92,30 @@ public class Interpreter {
         }
         return options;
     }
-    private String deleteEscaped(String generator){
+
+    private String deleteEscaped(String generator) {
         String[] characters = generator.split("");
-        String result = "";
-        for(String character:characters){
-            if(!character.equals("\\")){
-                result += character;
+        StringBuffer result = new StringBuffer();
+        for (String character : characters) {
+            if (!character.equals("\\")) {
+                result.append(character);
             }
         }
-        return result;
+        return result.toString();
     }
 
-    public String generateRandomChar(){
+    public String generateRandomChar() {
         randomNumber.setMin(32); //puedo ver el numero y escaparlo si es necesario
         randomNumber.setMax(127);
         int number = randomNumber.getNumber();
         String escape = "";
 
-       /** if(number < 14 ||number > 133 ){
-            escape = "\\";
-        }
-        if(number == 47){
-            escape = "\\";
-        }*/
+        /** if(number < 14 ||number > 133 ){
+         escape = "\\";
+         }
+         if(number == 47){
+         escape = "\\";
+         }*/
 
         //return String.valueOf(((char) randomNumber.getNumber()));
         //return escape.concat(String.valueOf(Character.toChars(randomNumber.getNumber())));
