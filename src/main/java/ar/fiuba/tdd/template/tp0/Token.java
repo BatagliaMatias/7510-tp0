@@ -28,5 +28,8 @@ public class Token {
     public void setQuantifier(String quantifier) {
         this.quantifier = quantifier;
     }
+
+
+
 }
 

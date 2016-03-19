@@ -36,4 +36,12 @@ public class TokenValidator {
         return generator.endsWith("\\");
     }
 
+    public Boolean isDot(String generator){
+        return generator.equals(".");
+    }
+
+    public Boolean isUnion(String generator){
+        return generator.startsWith("[") && generator.endsWith("]");
+    }
+
 }

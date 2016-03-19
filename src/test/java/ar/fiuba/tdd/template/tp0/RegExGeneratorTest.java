@@ -14,9 +14,10 @@ import static org.junit.Assert.assertTrue;
 public class RegExGeneratorTest {
 
     private boolean validate(String regEx, int numberOfResults) {
-        RegExGenerator generator = new RegExGenerator();
+        int maxLength = 5;
+        RegExGenerator generator = new RegExGenerator(maxLength);
         // TODO: Uncomment parameters
-        List<String> results = generator.generate(/*regEx, numberOfResults*/);
+        List<String> results = generator.generate(regEx, numberOfResults);
         // force matching the beginning and the end of the strings
         Pattern pattern = Pattern.compile("^" + regEx + "$");
         return results
@@ -35,7 +36,7 @@ public class RegExGeneratorTest {
     public void testAnyCharacter() {
         assertTrue(validate(".", 1));
     }
-/*
+
     @Test
     public void testMultipleCharacters() {
         assertTrue(validate("...", 1));
@@ -44,6 +45,16 @@ public class RegExGeneratorTest {
     @Test
     public void testLiteral() {
         assertTrue(validate("\\@", 1));
+    }
+
+    @Test
+    public void testLiteralRepeat() {
+        assertTrue(validate("\\@", 100));
+    }
+
+    @Test
+    public void testTonsOfDots() {
+        assertTrue(validate(".........", 100));
     }
 
     @Test
@@ -62,9 +73,14 @@ public class RegExGeneratorTest {
     }
 
     @Test
+    public void testCharacterSetWithEscaped() {
+        assertTrue(validate("[\\@\\!]", 1));
+    }
+
+    @Test
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1));
     }
-    */
-    // TODO: Add more tests!!!
+
+
 }
