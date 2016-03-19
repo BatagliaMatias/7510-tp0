@@ -7,9 +7,10 @@ public class RegExGenerator {
 
     private int maxLength;
     private RegExParser regExParser = new RegExParser();
-
+    private  Interpreter interpreter;
     public RegExGenerator(int maxLength) {
         this.maxLength = maxLength;
+        interpreter = new Interpreter(maxLength);
     }
 
     // TODO: Uncomment parameters
@@ -24,7 +25,7 @@ public class RegExGenerator {
 
         for (Token token:tokens) {
             for (int i = 0; i < results.size() ; i++) {
-                results.set(i, results.get(i) + token.getGenerator());
+                results.set(i, results.get(i) + interpreter.interpret(token));
             }
 
         }

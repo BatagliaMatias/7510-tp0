@@ -22,7 +22,7 @@ public class RegExParser {
                 token = new Token("","");
             }
             else{
-                if(tokenValidator.isOpenUnionGenerator(generator) || tokenValidator.isEscaped(generator)){
+                if(tokenValidator.isOpenUnionGenerator(generator) || tokenValidator.isLastCharacterEscape(generator)){
                     generator += character;
                 }
                 else{

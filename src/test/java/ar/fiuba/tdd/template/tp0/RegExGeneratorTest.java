@@ -41,10 +41,20 @@ public class RegExGeneratorTest {
     public void testMultipleCharacters() {
         assertTrue(validate("...", 1));
     }
-/*
+
     @Test
     public void testLiteral() {
         assertTrue(validate("\\@", 1));
+    }
+
+    @Test
+    public void testLiteralRepeat() {
+        assertTrue(validate("\\@", 100));
+    }
+
+    @Test
+    public void testTonsOfDots() {
+        assertTrue(validate(".........", 100));
     }
 
     @Test
@@ -63,9 +73,14 @@ public class RegExGeneratorTest {
     }
 
     @Test
+    public void testCharacterSetWithEscaped() {
+        assertTrue(validate("[\\@\\!]", 1));
+    }
+
+    @Test
     public void testCharacterSetWithQuantifiers() {
         assertTrue(validate("[abc]+", 1));
     }
-*/
-    // TODO: Add more tests!!!
+
+
 }
