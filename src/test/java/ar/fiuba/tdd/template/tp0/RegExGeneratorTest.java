@@ -1,9 +1,6 @@
 package ar.fiuba.tdd.template.tp0;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -23,11 +20,11 @@ public class RegExGeneratorTest {
         return results
                 .stream()
                 .reduce(true,
-                    (acc, item) -> {
-                        Matcher matcher = pattern.matcher(item);
-                        return acc && matcher.find();
-                    },
-                    (item1, item2) -> item1 && item2);
+                        (acc, item) -> {
+                            Matcher matcher = pattern.matcher(item);
+                            return acc && matcher.find();
+                        },
+                        (item1, item2) -> item1 && item2);
     }
 
     //TODO: Uncomment these tests

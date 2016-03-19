@@ -16,31 +16,31 @@ public class TokenValidator {
         quantifiers.add("?");
     }
 
-    public Boolean isQuantifier(String character){
+    public Boolean isQuantifier(String character) {
         return quantifiers.contains(character);
     }
 
-    public Boolean isOpenUnionGenerator(String generator){
-        return generator.startsWith("[") && ! generator.endsWith("]");
+    public Boolean isOpenUnionGenerator(String generator) {
+        return generator.startsWith("[") && !generator.endsWith("]");
     }
 
-    public Boolean isEscaped(String generator){
+    public Boolean isEscaped(String generator) {
         return generator.startsWith("\\");
     }
 
-    public Boolean isLastGenerator(String generator){
+    public Boolean isLastGenerator(String generator) {
         return (!generator.equals(""));
     }
 
-    public Boolean isLastCharacterEscape(String generator){
+    public Boolean isLastCharacterEscape(String generator) {
         return generator.endsWith("\\");
     }
 
-    public Boolean isDot(String generator){
+    public Boolean isDot(String generator) {
         return generator.equals(".");
     }
 
-    public Boolean isUnion(String generator){
+    public Boolean isUnion(String generator) {
         return generator.startsWith("[") && generator.endsWith("]");
     }
 

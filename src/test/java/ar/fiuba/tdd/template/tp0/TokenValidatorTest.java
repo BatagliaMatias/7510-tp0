@@ -4,13 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
 
 /**
  * Created by mbataglia on 18/03/16.
  */
 public class TokenValidatorTest {
     private TokenValidator tokenValidator = new TokenValidator();
+
     @Test
     public void isQuantifier() throws Exception {
         Assert.assertThat(tokenValidator.isQuantifier("*"), is(true));

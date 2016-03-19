@@ -10,13 +10,13 @@ public class RandomNumber {
     private int min;
     private int max;
 
-    public RandomNumber(int min,int max){
+    public RandomNumber(int min, int max) {
         this.min = min;
         this.max = max + 1;
     }
 
-    public int getNumber(){
-        return random.nextInt(max-min) + min;
+    public int getNumber() {
+        return random.nextInt(max - min) + min;
     }
 
     public int getMin() {

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RegExGenerator {
-
-    private int maxLength;
     private RegExParser regExParser = new RegExParser();
-    private  Interpreter interpreter;
+    private Interpreter interpreter;
+
     public RegExGenerator(int maxLength) {
-        this.maxLength = maxLength;
         interpreter = new Interpreter(maxLength);
     }
 
@@ -23,8 +21,8 @@ public class RegExGenerator {
 
         ArrayList<Token> tokens = regExParser.parsear(regEx);
 
-        for (Token token:tokens) {
-            for (int i = 0; i < results.size() ; i++) {
+        for (Token token : tokens) {
+            for (int i = 0; i < results.size(); i++) {
                 results.set(i, results.get(i) + interpreter.interpret(token));
             }
 
