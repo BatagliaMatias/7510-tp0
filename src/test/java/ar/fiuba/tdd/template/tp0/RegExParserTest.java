@@ -138,7 +138,7 @@ public class RegExParserTest {
         Token token5 = tokens.get(4);
         Token token6 = tokens.get(5);
         Token token7 = tokens.get(6);
-        
+
         Assert.assertEquals("+", token3.getQuantifier());
         Assert.assertEquals("C", token3.getGenerator());
 
