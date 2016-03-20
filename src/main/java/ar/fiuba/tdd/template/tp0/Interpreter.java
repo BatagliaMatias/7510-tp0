@@ -123,8 +123,8 @@ public class Interpreter {
     }
 
     public String generateRandomChar() {
-        randomNumber.setMin(32); //puedo ver el numero y escaparlo si es necesario
-        randomNumber.setMax(127);
+        randomNumber.setMin(0); //puedo ver el numero y escaparlo si es necesario
+        randomNumber.setMax(255);
         int number = randomNumber.getNumber();
         String escape = "";
         return escape.concat(String.valueOf(Character.toChars(number)));
